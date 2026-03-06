@@ -10,5 +10,4 @@ jobs:
 
     steps:
       - name: checkingworkflow
-      run: echo "Hellow test"
-    
+        run: echo "Hellow test"  
