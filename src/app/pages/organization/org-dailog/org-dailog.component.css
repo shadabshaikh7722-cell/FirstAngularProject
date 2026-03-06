@@ -1,0 +1,50 @@
+.dialog-wrapper {
+  padding: 24px;
+}
+
+.dialog-header .title {
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.custom-input {
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.custom-input:focus {
+  border: 2px solid #0d1b2a;
+  box-shadow: none;
+}
+
+.dialog-footer {
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  border-radius: 8px;
+  padding: 8px 20px;
+}
+
+.save-btn {
+  background-color: #0d1b2a;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 22px;
+}
+
+.save-btn:hover {
+  background-color: #1b263b;
+}

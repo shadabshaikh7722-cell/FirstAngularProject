@@ -1,0 +1,181 @@
+<!-- Button Row -->
+<div class="d-flex justify-content-end mb-3 addbtn">
+    <button id="addbtn" class="btn btn-dark px-4" (click)="openModal('A')">
+        + Add User
+    </button>
+</div>
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm" style="border-radius: 10px;padding: 17px;">
+    <div class="search-container">
+        <input type="text" class="form-control search-input" placeholder="Search user..." [(ngModel)]="searchText"
+            (ngModelChange)="onSearchChange($event)" />
+        <i class="bi bi-search search-icon"></i>
+    </div>
+</div>
+
+
+<br>
+
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm" style="border-radius: 10px; padding: 17px;">
+
+    <div class="table-responsive">
+        <ag-grid-angular [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+            (gridReady)="onGridReady($event)" [pagination]="true" [paginationPageSize]="10" ,
+            [suppressPaginationPanel]="true" , [theme]="myTheme" [domLayout]="'autoHeight'"
+            (cellClicked)="onCellClicked($event)">
+        </ag-grid-angular>
+    </div>
+     <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+
+        <div class="text-muted small">
+            Showing {{ (currentPage - 1) * pageSize + 1 }}
+            to {{ currentPage * pageSize > totalRecords ? totalRecords : currentPage * pageSize }}
+            of {{ totalRecords }} records
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <!-- First -->
+            <i class="bi bi-chevron-double-left fs-5 text-primary cursor-pointer" (click)="currentPage = 1; loadUsers()"
+                [class.text-muted]="currentPage === 1" [style.pointer-events]="currentPage === 1 ? 'none' : 'auto'">
+            </i>
+
+            <!-- Previous -->
+            <i class="bi bi-chevron-left fs-5 text-primary cursor-pointer" (click)="prevPage()"
+                [class.text-muted]="currentPage === 1" [style.pointer-events]="currentPage === 1 ? 'none' : 'auto'">
+            </i>
+
+            <span class="fw-semibold small">
+                {{ currentPage }} / {{ totalPages }}
+            </span>
+
+            <!-- Next -->
+            <i class="bi bi-chevron-right fs-5 text-primary cursor-pointer" (click)="nextPage()"
+                [class.text-muted]="currentPage === totalPages"
+                [style.pointer-events]="currentPage === totalPages ? 'none' : 'auto'">
+            </i>
+
+            <!-- Last -->
+            <i class="bi bi-chevron-double-right fs-5 text-primary cursor-pointer"
+                (click)="currentPage = totalPages; loadUsers()" [class.text-muted]="currentPage === totalPages"
+                [style.pointer-events]="currentPage === totalPages ? 'none' : 'auto'">
+            </i>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered custom-modal">
+        <div class="modal-content rounded-2">
+
+            <!-- Header -->
+            <div class="modal-header mb-0 border-0">
+                <div>
+                    <p class="modal-title fw-bold">Add New User</p>
+                    <small class="text-muted">Create a new healthcare user</small>
+                </div>
+                <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <form [formGroup]="userForm">
+
+                    <div class="col-md-6 mb-2" hidden>
+                        <input type="text" class="form-control form-control-sm" formControlName="Code" />
+                    </div>
+
+                    <!-- User Name -->
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold">User Name</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Enter user name"
+                            formControlName="UserName" [readonly]="isReadonly" />
+                        <div *ngIf="userForm.get('UserName')?.invalid && userForm.get('UserName')?.touched"
+                            class="text-danger small mt-1">
+                            User Name is required
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold">Password</label>
+                        <input type="password" class="form-control form-control-sm" placeholder="Enter Password"
+                            formControlName="Password" [readonly]="isReadonly" />
+                        <div *ngIf="userForm.get('Password')?.invalid && userForm.get('Password')?.touched"
+                            class="text-danger small mt-1">
+                            Password is required
+                        </div>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold">Full Name</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Enter Full Name"
+                            formControlName="Fullname" [readonly]="isReadonly" />
+                        <div *ngIf="userForm.get('Fullname')?.invalid && userForm.get('Fullname')?.touched"
+                            class="text-danger small mt-1">
+                            Fullname is required
+                        </div>
+                    </div>
+
+                    <!-- Mobile No -->
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold">Mobile No</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="Enter Mobile No"
+                            formControlName="Mobileno" [readonly]="isReadonly" />
+                        <div *ngIf="userForm.get('Mobileno')?.invalid && userForm.get('Mobileno')?.touched"
+                            class="text-danger small mt-1">
+                            Mobileno is required
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+            <!-- Footer -->
+            <div class="modal-footer border-0">
+                <button class="btn btn-outline-secondary btn-sm" (click)="closeModal()">
+                    Cancel
+                </button>
+                <!-- <button class="btn btn-dark btn-sm px-3" [hidden]="isReadonly" [disabled]="userForm.invalid"
+                    (click)="saveUser()">
+                    Save User
+                </button> -->
+                <!-- Save Button -->
+                <button *ngIf="!isEdit" class="btn btn-dark btn-sm px-3" [hidden]="isReadonly"
+                    [disabled]="userForm.invalid" (click)="saveUser()">
+                    Save User
+                </button>
+
+                <!-- Update Button -->
+                <button *ngIf="isEdit" class="btn btn-dark btn-sm px-3" [hidden]="isReadonly"
+                    [disabled]="userForm.invalid" (click)="updateUser()">
+                    Update User
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>Are you sure you want to delete?</p>
+                <button class="btn btn-danger">Yes</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

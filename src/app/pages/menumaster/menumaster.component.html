@@ -1,0 +1,66 @@
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm"
+     style="border-radius: 10px; padding: 17px;">
+
+  <div class="search-container">
+    <input type="text"
+           class="form-control search-input"
+           placeholder="Search menu..."
+           [(ngModel)]="searchText"
+           (ngModelChange)="onSearchChange($event)" />
+
+    
+  </div>
+
+</div>
+
+
+<br>
+
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm" style="border-radius: 10px; padding: 17px;">
+    <div class="table-responsive">
+        <ag-grid-angular [rowData]="rowData" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+            (gridReady)="onGridReady($event)" [pagination]="true" [paginationPageSize]="10" ,
+            [suppressPaginationPanel]="true" , [theme]="myTheme" [domLayout]="'autoHeight'">
+        </ag-grid-angular>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+
+        <div class="text-muted small">
+            Showing {{ (currentPage - 1) * pageSize + 1 }}
+            to {{ currentPage * pageSize > totalRecords ? totalRecords : currentPage * pageSize }}
+            of {{ totalRecords }} records
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <!-- First -->
+            <i class="bi bi-chevron-double-left fs-5 text-primary cursor-pointer" (click)="currentPage = 1; loadUsers()"
+                [class.text-muted]="currentPage === 1" [style.pointer-events]="currentPage === 1 ? 'none' : 'auto'">
+            </i>
+
+            <!-- Previous -->
+            <i class="bi bi-chevron-left fs-5 text-primary cursor-pointer" (click)="prevPage()"
+                [class.text-muted]="currentPage === 1" [style.pointer-events]="currentPage === 1 ? 'none' : 'auto'">
+            </i>
+
+            <span class="fw-semibold small">
+                {{ currentPage }} / {{ totalPages }}
+            </span>
+
+            <!-- Next -->
+            <i class="bi bi-chevron-right fs-5 text-primary cursor-pointer" (click)="nextPage()"
+                [class.text-muted]="currentPage === totalPages"
+                [style.pointer-events]="currentPage === totalPages ? 'none' : 'auto'">
+            </i>
+
+            <!-- Last -->
+            <i class="bi bi-chevron-double-right fs-5 text-primary cursor-pointer"
+                (click)="currentPage = totalPages; loadUsers()" [class.text-muted]="currentPage === totalPages"
+                [style.pointer-events]="currentPage === totalPages ? 'none' : 'auto'">
+            </i>
+
+        </div>
+
+    </div>
+</div>

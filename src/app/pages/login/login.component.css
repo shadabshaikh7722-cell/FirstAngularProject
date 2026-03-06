@@ -1,0 +1,65 @@
+/* Full page center */
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+}
+
+/* Card */
+.login-card {
+  width: 420px;
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 14px;
+}
+
+/* Logo */
+.logo-box {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  background: #0f172a;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 26px;
+}
+
+/* Inputs */
+.custom-input {
+  height: 45px;
+  border-radius: 8px;
+  border: 1px solid #dbeafe;
+}
+
+.custom-input:focus {
+  box-shadow: none;
+  border-color: #1e3a8a;
+}
+
+/* Eye icon */
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 38px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+/* Button */
+.login-btn {
+  height: 45px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+
+.login-btn:hover {
+  opacity: 0.95;
+}
